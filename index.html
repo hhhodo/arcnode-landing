@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCNODE — 클라우드 · 소프트웨어 플랫폼</title>
+<meta name="description" content="아크노드는 클라우드 인프라, 소프트웨어 개발, 보안 운영까지 하나의 기준으로 설계하는 IT 플랫폼 파트너입니다.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,500;1,700&family=Figtree:wght@400;600&family=Inter:wght@500;600;700&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<!--
+variant:
+typo=loud
+image=high
+color=accent
+
+image-radius=sharp
+card-radius=sharp
+button-radius=round
+
+border=hairline
+button-style=solid
+fw=700/400
+spacing=figma-measured (site.css --fg-* tokens)
+-->
+
+<!--
+Layout Declaration (Figma 1920 frame, node 1247:2)
+Header      — floating glass pill (fixed)
+Hero        — full-bleed — marquee + 3 circles (centered row)
+Statement   — full-bleed — 3 centered lines, image slot inline
+Principles  — 1920 frame — left card (480) / right card (480) offset, 828x879 image slot centered behind
+Stat 01     — image slot 517x691 centered, text block right (x 1288)
+Stat 02     — image slot centered, text block left (x 313), right-aligned
+Stat 03     — image slot centered, text block right (x 1288)
+Contact     — full-bleed — title at x 480 / content column at x 1120 (800), oversized ghost word behind
+Footer      — full-bleed — wordmark + links left / address right (container 1488)
+이미지 슬롯은 모두 회색 플레이스홀더 (#aaa / #d9d9d9) — 추후 이미지 교체 영역
+-->
+
+<header class="header" id="top">
+  <div class="header__bar">
+    <a class="header__brand" href="#top" aria-label="아크노드 홈">
+      <img class="header__icon" src="assets/icons/logo-cube.svg" alt="" width="19.4844" height="21">
+      <span class="header__name">아크노드</span>
+    </a>
+    <nav class="header__nav" aria-label="주요 메뉴">
+      <a href="#statement">기술소개</a>
+      <a href="#principles">서비스</a>
+      <a href="#stats">솔루션</a>
+      <a href="#stats">구축사례</a>
+      <a href="#contact">인사이트</a>
+    </nav>
+    <a class="btn btn--pill" href="#contact"><span class="btn__label">프로젝트 문의</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" aria-label="소개">
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+        <span class="marquee__item" aria-hidden="true"><span class="marquee__text">code core cloud <em class="marquee__alt">Tech Platform</em></span></span>
+      </div>
+    </div>
+    <div class="hero__row">
+      <div class="hero__cell"><a class="orb" href="#statement"><span class="orb__label">(<span>Sof</span><em>tw</em><span>are)</span></span><span class="orb__word">code</span></a></div>
+      <div class="hero__cell"><a class="orb" href="#principles"><span class="orb__label">(<span>Pla</span><em>tf</em><span>orm)</span></span><span class="orb__word">core</span></a></div>
+      <div class="hero__cell"><a class="orb" href="#stats"><span class="orb__label">(<span>Se</span><em>cu</em><span>rity)</span></span><span class="orb__word">cloud</span></a></div>
+    </div>
+  </section>
+
+  <section class="statement" id="statement" aria-label="핵심 메시지">
+    <h2 class="statement__title">
+      <span class="statement__line">
+        <span class="statement__text">우리는</span>
+        <span class="pill">DEVOPS</span>
+        <span class="statement__text">서비스의</span>
+      </span>
+      <span class="statement__line statement__line--img">
+        <span class="statement__text statement__text--accent">디지털</span>
+        <span class="img-slot img-slot--statement" role="img" aria-label="이미지 영역"></span>
+        <span class="statement__text"><span class="statement__text--accent">코어</span>를</span>
+      </span>
+      <span class="statement__line">
+        <span class="statement__text">설계합니다</span>
+        <span class="pill">PLATFORM</span>
+      </span>
+    </h2>
+  </section>
+
+  <section class="principles" id="principles" aria-label="설계 원칙">
+    <div class="img-slot img-slot--center" role="img" aria-label="이미지 영역"></div>
+
+    <div class="principles__row principles__row--left">
+      <article class="card card--a">
+        <span class="card__edge-corner" aria-hidden="true"></span>
+        <span class="card__edge" aria-hidden="true"></span>
+        <p class="card__eyebrow"><span class="card__dot" aria-hidden="true"></span><span class="card__no">01</span><span class="card__tag">ARCHITECTURE</span></p>
+        <h3 class="card__title"><span>구조부터 설계해야</span><span>오래 가는 서비스</span></h3>
+        <p class="card__desc"><span>비즈니스 요구와 트래픽을 먼저 분석합니다.</span><span>확장 가능한 클라우드 아키텍처와 API를</span><span>함께 설계합니다.</span></p>
+      </article>
+    </div>
+
+    <div class="principles__row principles__row--right principles__row--gap">
+      <article class="card card--b">
+        <span class="card__edge-corner" aria-hidden="true"></span>
+        <span class="card__edge" aria-hidden="true"></span>
+        <p class="card__eyebrow"><span class="card__dot" aria-hidden="true"></span><span class="card__no">02</span><span class="card__tag">STRENGTH</span></p>
+        <h3 class="card__title"><span>하나의 스택으로</span><span>기획부터 운영까지</span></h3>
+        <dl class="card__list">
+          <div class="card__item"><dt>통합 개발팀</dt><dd>백엔드 · 프론트 · 인프라가 한 팀에서 이어집니다.</dd></div>
+          <div class="card__item"><dt>검증된 설계</dt><dd>아키텍처를 먼저 검증하고, 필요한 것만 만듭니다.</dd></div>
+          <div class="card__item"><dt>안정적 운영</dt><dd>배포 이후까지 모니터링하고 개선합니다.</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <div class="principles__row principles__row--left">
+      <article class="card card--a">
+        <span class="card__edge-corner" aria-hidden="true"></span>
+        <span class="card__edge" aria-hidden="true"></span>
+        <p class="card__eyebrow"><span class="card__dot" aria-hidden="true"></span><span class="card__no">03</span><span class="card__tag">SECURITY</span></p>
+        <h3 class="card__title"><span>보안은 나중이 아닌</span><span>처음부터 기본값</span></h3>
+        <p class="card__desc"><span>개발 단계부터 취약점을 점검하고,</span><span>접근 제어와 데이터 암호화를</span><span>표준으로 적용합니다.</span></p>
+      </article>
+    </div>
+
+    <div class="principles__row principles__row--right principles__row--gap">
+      <article class="card card--b">
+        <span class="card__edge-corner" aria-hidden="true"></span>
+        <span class="card__edge" aria-hidden="true"></span>
+        <p class="card__eyebrow"><span class="card__dot" aria-hidden="true"></span><span class="card__no">04</span><span class="card__tag">DELIVERY</span></p>
+        <h3 class="card__title"><span>작게 나눠 빠르게</span><span>끊김 없이 배포</span></h3>
+        <dl class="card__list">
+          <div class="card__item"><dt>자동화 파이프라인</dt><dd>테스트부터 배포까지 CI/CD로 자동화합니다.</dd></div>
+          <div class="card__item"><dt>투명한 진행</dt><dd>주간 스프린트로 진행 상황을 공유합니다.</dd></div>
+          <div class="card__item"><dt>지속적 개선</dt><dd>운영 데이터를 바탕으로 계속 최적화합니다.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <div id="stats">
+    <section class="stat stat--right" aria-label="성과 01">
+      <div class="stat__body">
+        <p class="stat__no">01</p>
+        <p class="stat__value">3.8X</p>
+        <p class="stat__label">배포 속도 개선</p>
+      </div>
+      <div class="img-slot img-slot--stat" role="img" aria-label="이미지 영역"></div>
+    </section>
+
+    <section class="stat stat--left" aria-label="성과 02">
+      <div class="img-slot img-slot--stat" role="img" aria-label="이미지 영역"></div>
+      <div class="stat__body">
+        <p class="stat__no">02</p>
+        <p class="stat__value">120+</p>
+        <p class="stat__label">구축 프로젝트</p>
+      </div>
+    </section>
+
+    <section class="stat stat--right" aria-label="성과 03">
+      <div class="stat__body">
+        <p class="stat__no">03</p>
+        <p class="stat__value">99.9%</p>
+        <p class="stat__label">서비스 가용성</p>
+      </div>
+      <div class="img-slot img-slot--stat" role="img" aria-label="이미지 영역"></div>
+    </section>
+  </div>
+
+  <section class="contact" id="contact" aria-label="프로젝트 문의">
+    <div class="contact__frame">
+      <p class="contact__ghost" aria-hidden="true">Say Hello</p>
+      <h2 class="contact__title">Contact Us</h2>
+      <div class="contact__col">
+        <address class="contact__address">
+          <span>Tech Tower 12F, 231 Teheran-ro,</span>
+          <span>Gangnam-gu, Seoul, Korea</span>
+        </address>
+        <dl class="contact__list">
+          <dt class="contact__term">EMAIL</dt>
+          <dd class="contact__desc">
+            <span class="contact__desc-title">도입 상담</span>
+            <a class="contact__mail" href="mailto:hello@arcnode.io">hello@arcnode.io</a>
+          </dd>
+        </dl>
+        <a class="btn btn--sharp" href="mailto:hello@arcnode.io"><span class="btn__label">프로젝트 문의</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__frame">
+    <p class="footer__logo" aria-label="arcnode"><span class="footer__logo-text">arcnode</span><span class="footer__logo-orb" aria-hidden="true"></span></p>
+    <div class="footer__bar">
+      <div class="footer__left">
+        <nav class="footer__nav" aria-label="푸터 메뉴">
+          <a href="#principles">Console</a>
+          <a href="#stats">Docs</a>
+          <a href="#contact">Status</a>
+        </nav>
+        <p class="footer__copy">© 2026 ARCNODE. All rights reserved.</p>
+      </div>
+      <div class="footer__right">
+        <p>서울특별시 강남구 테헤란로 231, 12층 (역삼동, 테크타워)</p>
+        <p>E hello@arcnode.io</p>
+        <p class="footer__tel"><span>T 02.1234.5678</span><span>F 02.1234.5679</span></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
