@@ -17,8 +17,18 @@ typo=loud / image=high / color=accent / radius=sharp(카드·이미지)·round(�
 | Contact | 타이틀 x480, 컬럼 x1120(800), 고스트 "Say Hello" 200px | 900 |
 | Footer | 로고 x216 top304, 하단 바 x216 w1488 | 800 |
 
-## 폰트 (Figma 감지값 그대로)
-Pretendard Variable · Chakra Petch · Figtree · Playfair Display(Italic) · Inter · Menlo
+## 폰트
+- 본문(한글): Pretendard Variable
+- Pretendard 외 모든 폰트: **Chakra Petch** (Figtree·Playfair·Inter·Menlo 대체)
+- 두 번째 섹션 문장: **설립체 유건욱** — 눈누 CDN(`establishRetrosansOTF.woff`)에서 `@font-face`로 로드. 폰트 파일은 저장소에 포함하지 않음(재배포 금지 라이선스)
+
+## 스크롤 인트로 (`js/main.js`, 장면 높이 600vh / sticky 100vh)
+1. 정육각형 3개 — 스크롤하면 이미지가 나타남 (호버 이벤트 없음)
+2. 가운데 육각형이 `clip-path` 창으로 커지며 뒤 배경이 드러남
+3. 배경이 엘리베이터처럼 위로 올라가며 아래 검정 그라데이션이 드러남
+4. 검은 배경에서 문장이 글자 단위로 하나씩 날아옴 (스크롤 연동, 역방향 재생 가능)
+- `prefers-reduced-motion` 이면 정적 레이아웃으로 표시
+- 이미지 교체 시 `.hex__img`(3개)와 `.reveal__img`(1개)에 같은 이미지를 넣을 것
 
 ## 구조
 - `css/styles.css` — 디자인 키트 (수정 금지)
