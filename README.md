@@ -50,7 +50,7 @@ Figma 원본이 스크롤 연동 사이트 캡처라 카드 4개 중 2개가 중
 - Stats: 400vh 핀 고정 스테이지, 같은 자리에서 이미지·숫자·라벨이 교차 전환
 
 ## 두 번째 섹션 육각형 영상
-- 원본: `assets/images/td02250000057_1080p.mov`(1920×1080, 30fps, 601프레임, `.gitignore`로 저장소 제외) → `assets/video/statement-hex.mp4`로 변환 (중앙 세로 크롭 564×652, 모든 프레임이 키프레임이라 어느 프레임으로 이동해도 즉시 표시)
+- 원본: `assets/images/td0502t176777h.mov`(4096×2160 ProRes 800MB, 29.97fps, 180프레임, `.gitignore`로 저장소 제외) → `assets/video/statement-hex.mp4`(1.4MB)로 변환. 칩이 보이도록 x=1700 기준 세로 크롭 → 564×652, H.264 CRF30, 모든 프레임이 키프레임이라 어느 프레임으로 이동해도 즉시 표시
 - 장면 700vh: 엘리베이터 상승 후 빈 화면 → 육각형이 중앙에서 커짐 → 글자 날아옴. 영상 프레임은 육각형이 나타나는 순간부터 장면 끝까지 스크롤에 따라 한 장씩 이동
 - 영상 교체: 같은 비율로 크롭한 mp4를 `assets/video/statement-hex.mp4`에 덮어쓰고 `frames`(기본 601)·`FPS`(30)는 자동(`duration`) 계산
 - 로컬 테스트 시 `python3 -m http.server`는 Range 요청을 지원하지 않아 영상 탐색이 안 됨 → Range 지원 서버 또는 배포 환경(GitHub Pages)에서 확인
