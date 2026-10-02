@@ -20,15 +20,18 @@
   var vid = scene.querySelector('.statement__video');
 
   /* 영상은 스크롤과 무관하게 무한 반복 재생 (화면 밖에서는 일시정지) */
-  if (vid) {
-    vid.muted = true;
-    var play = function () { var r = vid.play(); if (r && r.catch) r.catch(function () {}); };
-    play();
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) play(); else vid.pause(); });
-      }).observe(scene);
-    }
+  var heroVid = reveal.querySelector('.reveal__video');
+  var videos = [vid, heroVid].filter(Boolean);
+  var inView = true;
+  function play(v) { var r = v.play(); if (r && r.catch) r.catch(function () {}); }
+  videos.forEach(function (v) { v.muted = true; play(v); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        inView = e.isIntersecting;
+        videos.forEach(function (v) { if (inView) play(v); else v.pause(); });
+      });
+    }).observe(scene);
   }
 
   /* 글자 분리 — 스크린리더는 h2 의 aria-label 을 읽는다 */
@@ -114,6 +117,11 @@
     var tLift = easeInOut(seg(p, P.lift));
     reveal.style.transform = 'translate3d(0,' + (-tLift * 100).toFixed(2) + '%,0)';
     reveal.style.visibility = tLift >= 1 ? 'hidden' : 'visible';
+    /* 배경이 화면 밖으로 올라가면 히어로 영상은 멈춰서 디코딩을 아낌 */
+    if (heroVid && inView) {
+      if (tLift >= 1) { if (!heroVid.paused) heroVid.pause(); }
+      else if (heroVid.paused) play(heroVid);
+    }
 
     var tHex = easeOut(seg(p, P.hex));
     hexSlot.style.transform = 'scale(' + tHex.toFixed(4) + ')';
