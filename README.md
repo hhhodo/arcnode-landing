@@ -19,7 +19,7 @@ typo=loud / image=high / color=accent / radius=sharp(카드·이미지)·round(�
 
 ## 폰트
 - 본문(한글): Pretendard Variable
-- 영문(라틴 글자·숫자·기호): **설립체 유건욱** — `ArcLatin` `@font-face`(unicode-range)로 라틴 영역만 적용, 한글은 Pretendard 유지
+- 영문(라틴 글자·숫자·기호): **설립체 유건욱** — Chakra Petch를 쓰던 모든 요소(헤더·버튼·마퀴·육각형·라벨·통계·문의 타이틀·푸터 로고)에 한글 포함 적용
 - 두 번째 섹션 문장: **설립체 유건욱** — 눈누 CDN(`establishRetrosansOTF.woff`)에서 `@font-face`로 로드. 폰트 파일은 저장소에 포함하지 않음(재배포 금지 라이선스)
 
 ## 스크롤 인트로 (`js/main.js`, 장면 높이 600vh / sticky 100vh)
