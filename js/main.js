@@ -18,19 +18,17 @@
   var title = scene.querySelector('.statement__title');
   var hexSlot = scene.querySelector('.img-slot--statement');
   var vid = scene.querySelector('.statement__video');
-  var FPS = 30, frames = 601, wantFrame = -1, shownFrame = -1;
 
-  /* 스크롤에 따라 프레임을 한 장씩 이동 (all-intra mp4 → 어느 프레임으로 이동해도 즉시 디코딩) */
-  function seekVideo() {
-    if (!vid || wantFrame === shownFrame) return;
-    if (vid.seeking) return;
-    shownFrame = wantFrame;
-    vid.currentTime = Math.min(shownFrame / FPS + 0.0005, (vid.duration || frames / FPS) - 0.001);
-  }
+  /* 영상은 스크롤과 무관하게 무한 반복 재생 (화면 밖에서는 일시정지) */
   if (vid) {
-    vid.pause();
-    vid.addEventListener('loadedmetadata', function () { frames = Math.round(vid.duration * FPS); seekVideo(); });
-    vid.addEventListener('seeked', seekVideo);
+    vid.muted = true;
+    var play = function () { var r = vid.play(); if (r && r.catch) r.catch(function () {}); };
+    play();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) play(); else vid.pause(); });
+      }).observe(scene);
+    }
   }
 
   /* 글자 분리 — 스크린리더는 h2 의 aria-label 을 읽는다 */
@@ -63,7 +61,7 @@
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
   /* 단계별 구간 (전체 스크롤 진행도 0~1) */
-  var P = { img: [0, 0.09], grow: [0.09, 0.40], lift: [0.40, 0.56], hex: [0.57, 0.70], text: [0.68, 0.96], video: [0.57, 1] };
+  var P = { img: [0, 0.09], grow: [0.09, 0.40], lift: [0.40, 0.56], hex: [0.57, 0.70], text: [0.68, 0.96] };
   function seg(p, r) { return clamp((p - r[0]) / (r[1] - r[0])); }
 
   var g = {};
@@ -120,11 +118,6 @@
     var tHex = easeOut(seg(p, P.hex));
     hexSlot.style.transform = 'scale(' + tHex.toFixed(4) + ')';
     hexSlot.style.visibility = tHex <= 0 ? 'hidden' : 'visible';
-    if (vid) {
-      wantFrame = Math.round(seg(p, P.video) * (frames - 1));
-      seekVideo();
-    }
-
     var tText = seg(p, P.text);
     var n = units.length;
     var dur = 0.3;
