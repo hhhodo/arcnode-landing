@@ -16,6 +16,22 @@
   var sides = scene.querySelectorAll('.hex--side');
   var marquee = scene.querySelector('.marquee');
   var title = scene.querySelector('.statement__title');
+  var hexSlot = scene.querySelector('.img-slot--statement');
+  var vid = scene.querySelector('.statement__video');
+  var FPS = 30, frames = 601, wantFrame = -1, shownFrame = -1;
+
+  /* 스크롤에 따라 프레임을 한 장씩 이동 (all-intra mp4 → 어느 프레임으로 이동해도 즉시 디코딩) */
+  function seekVideo() {
+    if (!vid || wantFrame === shownFrame) return;
+    if (vid.seeking) return;
+    shownFrame = wantFrame;
+    vid.currentTime = Math.min(shownFrame / FPS + 0.0005, (vid.duration || frames / FPS) - 0.001);
+  }
+  if (vid) {
+    vid.pause();
+    vid.addEventListener('loadedmetadata', function () { frames = Math.round(vid.duration * FPS); seekVideo(); });
+    vid.addEventListener('seeked', seekVideo);
+  }
 
   /* 글자 분리 — 스크린리더는 h2 의 aria-label 을 읽는다 */
   var units = [];
@@ -39,7 +55,7 @@
       });
     }
     title.querySelectorAll('.statement__text').forEach(walk);
-    units = Array.prototype.slice.call(title.querySelectorAll('.char, .pill, .img-slot--statement'));
+    units = Array.prototype.slice.call(title.querySelectorAll('.char, .pill'));
   })();
 
   function clamp(v) { return Math.min(1, Math.max(0, v)); }
@@ -47,7 +63,7 @@
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
   /* 단계별 구간 (전체 스크롤 진행도 0~1) */
-  var P = { img: [0, 0.10], grow: [0.10, 0.45], lift: [0.45, 0.65], text: [0.58, 0.92] };
+  var P = { img: [0, 0.09], grow: [0.09, 0.40], lift: [0.40, 0.56], hex: [0.57, 0.70], text: [0.68, 0.96], video: [0.57, 1] };
   function seg(p, r) { return clamp((p - r[0]) / (r[1] - r[0])); }
 
   var g = {};
@@ -100,6 +116,14 @@
     var tLift = easeInOut(seg(p, P.lift));
     reveal.style.transform = 'translate3d(0,' + (-tLift * 100).toFixed(2) + '%,0)';
     reveal.style.visibility = tLift >= 1 ? 'hidden' : 'visible';
+
+    var tHex = easeOut(seg(p, P.hex));
+    hexSlot.style.transform = 'scale(' + tHex.toFixed(4) + ')';
+    hexSlot.style.visibility = tHex <= 0 ? 'hidden' : 'visible';
+    if (vid) {
+      wantFrame = Math.round(seg(p, P.video) * (frames - 1));
+      seekVideo();
+    }
 
     var tText = seg(p, P.text);
     var n = units.length;
