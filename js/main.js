@@ -17,6 +17,7 @@
   var marquee = scene.querySelector('.marquee');
   var title = scene.querySelector('.statement__title');
   var hexSlot = scene.querySelector('.img-slot--statement');
+  var fadePx = parseFloat(getComputedStyle(root).getPropertyValue('--fg-reveal-fade')) || 300;
   var vid = scene.querySelector('.statement__video');
 
   /* 영상은 스크롤과 무관하게 무한 반복 재생 (화면 밖에서는 일시정지) */
@@ -152,6 +153,8 @@
 
     var tLift = easeInOut(seg(p, P.lift));
     reveal.style.transform = 'translate3d(0,' + (-tLift * 100).toFixed(2) + '%,0)';
+    /* 올라가는 배경의 아랫단을 그라데이션으로 흐려 뚝 끊기지 않게 함 */
+    reveal.style.setProperty('--reveal-fade', (Math.min(1, tLift * 6) * fadePx).toFixed(1) + 'px');
     reveal.style.visibility = tLift >= 1 ? 'hidden' : 'visible';
     /* 배경이 화면 밖으로 올라가면 히어로 영상은 멈춰서 디코딩을 아낌 */
     if (heroVid && inView) {

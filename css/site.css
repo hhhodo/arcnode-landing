@@ -24,6 +24,7 @@
   --fg-slot:var(--color-placeholder);
   --fg-grad-mid:#090b0b;
   --fg-grad-end:#0a1617;
+  --fg-reveal-fade:300px;
   --fg-glass:rgba(255,255,255,.04);
   --fg-rule:rgba(255,255,255,.08);
   --fg-edge-top:rgba(255,255,255,.11);
@@ -164,6 +165,8 @@ em{font-style:italic;}
 .js .hex--side{will-change:transform,opacity;}
 .js .reveal{display:block;position:absolute;inset:0;z-index:1;background:var(--fg-white);will-change:transform,clip-path;
   clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%);}
+.js .reveal{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 calc(100% - var(--reveal-fade,0px)),transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0,#000 calc(100% - var(--reveal-fade,0px)),transparent 100%);}
 .js .reveal__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:var(--img,0);}
 .js .statement{position:absolute;inset:0;z-index:0;height:auto;
   background:linear-gradient(180deg,var(--fg-black) 0%,var(--fg-grad-mid) 62%,var(--fg-grad-end) 100%);}
