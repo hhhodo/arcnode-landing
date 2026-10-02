@@ -42,7 +42,7 @@ Figma 원본이 스크롤 연동 사이트 캡처라 카드 4개 중 2개가 중
 `main` 푸시 시 GitHub Actions가 GitHub Pages에 배포합니다.
 
 ## 컬러
-브랜드 액센트: 청록 `#2ee6d6` (`--fg-accent`, 영상 색상에서 추출). 그라데이션 `--fg-grad-mid/--fg-grad-end`는 검정→아주 어두운 청록.
+브랜드 액센트: 차분한 청록 `#5cc2b6` (`--fg-accent`, 영상의 청록 계열). 그라데이션 `--fg-grad-mid/--fg-grad-end`는 검정→아주 어두운 청록회색.
 
 ## Principles / Stats 스크롤
 - Principles: 중앙 이미지 `position:sticky`로 고정, 좌우 카드는 스크롤에 따라 이미지 쪽으로 스쳐 지나감 (JS, ≤1024px에서는 비활성)
