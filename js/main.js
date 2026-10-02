@@ -141,3 +141,59 @@
     });
   });
 })();
+
+/* ARCNODE — principles 카드 스쳐지나가기 + stats 제자리 교체 */
+(function () {
+  if (!document.documentElement.classList.contains('js')) return;
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.principles .card'));
+  var stats = document.querySelector('.stats');
+  var layers = stats ? Array.prototype.slice.call(stats.querySelectorAll('.stat')) : [];
+  var SWEEP = 140; /* 카드가 중앙 이미지 쪽으로 스치는 최대 이동량(px) */
+
+  function clamp(v) { return Math.min(1, Math.max(0, v)); }
+
+  function renderCards() {
+    var vh = window.innerHeight;
+    var on = window.innerWidth > 1024;
+    cards.forEach(function (card) {
+      if (!on) { card.style.transform = ''; return; }
+      var r = card.getBoundingClientRect();
+      /* 0: 화면 아래에서 등장, 1: 화면 위로 퇴장 */
+      var t = clamp((vh - r.top) / (vh + r.height));
+      var shift = 1 - Math.abs(t - 0.5) * 2;           /* 중간 지점에서 최대 */
+      var dir = card.classList.contains('card--a') ? 1 : -1; /* 왼쪽 카드는 →, 오른쪽 카드는 ← */
+      var eased = shift * shift * (3 - 2 * shift);
+      card.style.transform = 'translate3d(' + (dir * eased * SWEEP).toFixed(1) + 'px,0,0)';
+    });
+  }
+
+  function renderStats() {
+    if (!stats) return;
+    var dist = stats.offsetHeight - window.innerHeight;
+    var p = clamp(-stats.getBoundingClientRect().top / dist);
+    var n = layers.length;
+    layers.forEach(function (el, i) {
+      var d = p * n - (i + 0.5);
+      var a = Math.abs(d);
+      var op = a <= 0.3 ? 1 : a >= 0.7 ? 0 : 1 - (a - 0.3) / 0.4;
+      if (i === 0 && d < 0) op = 1;
+      if (i === n - 1 && d > 0) op = 1;
+      var ty = ((i === 0 && d < 0) || (i === n - 1 && d > 0)) ? 0 : -d * 70;
+      el.style.opacity = op.toFixed(3);
+      el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
+      el.style.visibility = op <= 0 ? 'hidden' : 'visible';
+    });
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; renderCards(); renderStats(); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  renderCards();
+  renderStats();
+})();

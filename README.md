@@ -19,7 +19,7 @@ typo=loud / image=high / color=accent / radius=sharp(카드·이미지)·round(�
 
 ## 폰트
 - 본문(한글): Pretendard Variable
-- Pretendard 외 모든 폰트: **Chakra Petch** (Figtree·Playfair·Inter·Menlo 대체)
+- 영문(라틴 글자·숫자·기호): **설립체 유건욱** — `ArcLatin` `@font-face`(unicode-range)로 라틴 영역만 적용, 한글은 Pretendard 유지
 - 두 번째 섹션 문장: **설립체 유건욱** — 눈누 CDN(`establishRetrosansOTF.woff`)에서 `@font-face`로 로드. 폰트 파일은 저장소에 포함하지 않음(재배포 금지 라이선스)
 
 ## 스크롤 인트로 (`js/main.js`, 장면 높이 600vh / sticky 100vh)
@@ -40,3 +40,11 @@ Figma 원본이 스크롤 연동 사이트 캡처라 카드 4개 중 2개가 중
 
 ## 배포
 `main` 푸시 시 GitHub Actions가 GitHub Pages에 배포합니다.
+
+## 컬러
+브랜드 액센트: 라임 `#c8ff3d` (`--fg-accent`). 그라데이션 `--fg-grad-mid/--fg-grad-end`는 검정→아주 어두운 올리브.
+
+## Principles / Stats 스크롤
+- Principles: 중앙 이미지 `position:sticky`로 고정, 좌우 카드는 스크롤에 따라 이미지 쪽으로 스쳐 지나감 (JS, ≤1024px에서는 비활성)
+- 카드 모서리는 `clip-path`로 25px 깎아 포인트 라인과 정확히 맞물림 (배경이 튀어나오지 않음)
+- Stats: 400vh 핀 고정 스테이지, 같은 자리에서 이미지·숫자·라벨이 교차 전환
