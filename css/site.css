@@ -179,7 +179,8 @@ em{font-style:italic;}
 .statement__text--accent{color:var(--fg-accent);}
 .pill{display:inline-flex;align-items:center;padding:9.68px 18.48px;border:1px solid var(--fg-pill-border);border-radius:var(--radius-circle);
   font-family:var(--ff-latin);font-weight:600;font-size:17.6px;line-height:17.6px;letter-spacing:3.872px;color:var(--fg-pill-text);white-space:nowrap;}
-.img-slot--statement{width:var(--fg-slot-statement-w);height:var(--fg-slot-statement-h);background:var(--fg-slot-statement);}
+.img-slot--statement{width:var(--fg-slot-statement-w);height:var(--fg-slot-statement-h);background:var(--fg-slot-statement);
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);}
 
 /* ---------- principles ---------- */
 .principles{position:relative;padding-top:var(--fg-prin-pt);padding-bottom:var(--fg-prin-pb);background:var(--fg-black);}
