@@ -25,11 +25,46 @@
   var inView = true;
   function play(v) { var r = v.play(); if (r && r.catch) r.catch(function () {}); }
   videos.forEach(function (v) { v.muted = true; play(v); });
+
+  /* 양옆 육각형(code, cloud) — 히어로 영상이 창문처럼 비쳐 보이도록 같은 영상 프레임을 캔버스에 그림.
+     육각형 위치에 해당하는 영역만 잘라 그리므로 가운데 육각형·전체 배경과 정확히 이어진다 */
+  var canvases = Array.prototype.slice.call(scene.querySelectorAll('.hex__canvas'));
+  var sidesOn = true, looping = false;
+  function sizeCanvases() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvases.forEach(function (c) {
+      var w = c.offsetWidth, h = c.offsetHeight;
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
+    });
+  }
+  function drawHexes() {
+    if (!heroVid || heroVid.readyState < 2 || !heroVid.videoWidth) return;
+    var s = stage.getBoundingClientRect();
+    var sc = Math.max(s.width / heroVid.videoWidth, s.height / heroVid.videoHeight);
+    var ox = (s.width - heroVid.videoWidth * sc) / 2;
+    var oy = (s.height - heroVid.videoHeight * sc) / 2;
+    canvases.forEach(function (c) {
+      var r = c.getBoundingClientRect();
+      var ctx = c.getContext('2d');
+      ctx.drawImage(heroVid,
+        (r.left - s.left - ox) / sc, (r.top - s.top - oy) / sc, r.width / sc, r.height / sc,
+        0, 0, c.width, c.height);
+    });
+  }
+  function loop() {
+    if (!inView) { looping = false; return; }
+    if (sidesOn) drawHexes();
+    requestAnimationFrame(loop);
+  }
+  function startLoop() { if (!looping) { looping = true; requestAnimationFrame(loop); } }
+
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         inView = e.isIntersecting;
         videos.forEach(function (v) { if (inView) play(v); else v.pause(); });
+        if (inView) startLoop();
       });
     }).observe(scene);
   }
@@ -110,6 +145,7 @@
       el.style.transform = 'translate3d(' + (dir * e * g.vw * 0.45).toFixed(1) + 'px,0,0)';
       el.style.opacity = (1 - clamp(e * 1.8)).toFixed(3);
     });
+    sidesOn = e < 0.55;
     centerText.style.opacity = (1 - clamp(tGrow * 3)).toFixed(3);
     marquee.style.opacity = (1 - clamp(tGrow * 2.2)).toFixed(3);
     marquee.style.transform = 'translate3d(0,' + (-e * 90).toFixed(1) + 'px,0)';
@@ -149,13 +185,14 @@
     ticking = true;
     requestAnimationFrame(function () { ticking = false; render(); });
   }
-  function onResize() { measure(); render(); }
+  function onResize() { measure(); sizeCanvases(); render(); }
 
   /* 폰트가 로드된 뒤 글자 크기가 바뀔 수 있으므로 다시 측정 */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(onResize);
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize);
   onResize();
+  startLoop();
 
   /* "기술소개" 앵커 — 핀 고정 장면의 끝(문장이 모두 모인 지점)으로 이동 */
   document.querySelectorAll('[data-scene-end]').forEach(function (a) {
