@@ -19,7 +19,7 @@ typo=loud / image=high / color=accent / radius=sharp(카드·이미지)·round(�
 
 ## 폰트
 - 본문(한글): Pretendard Variable
-- 영문(라틴 글자·숫자·기호): **설립체 유건욱** — `ArcLatin` `@font-face`(unicode-range)로 라틴 글자·숫자만 적용, 한글은 Pretendard 유지 (두 번째 섹션 문장만 한글도 설립체)
+- 영문(라틴 글자·숫자·기호): **설립체 유건욱** — `ArcLatin` `@font-face`(unicode-range)로 라틴 글자·숫자만 적용, 한글은 Pretendard 유지 (두 번째 섹션은 강조어 "디지털 코어"만 설립체, 나머지 글자·알약 라벨은 Pretendard)
 - 두 번째 섹션 문장: **설립체 유건욱** — 눈누 CDN(`establishRetrosansOTF.woff`)에서 `@font-face`로 로드. 폰트 파일은 저장소에 포함하지 않음(재배포 금지 라이선스)
 
 ## 스크롤 인트로 (`js/main.js`, 장면 높이 600vh / sticky 100vh)
