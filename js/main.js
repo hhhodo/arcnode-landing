@@ -263,15 +263,17 @@
   renderStats();
 })();
 
-/* ARCNODE — Principles 중앙 SVG: 스크롤하면 바깥에서 안으로 라인이 채워짐 */
+/* ARCNODE — Principles 중앙 SVG: 스크롤하면 바깥에서 안으로 라인이 한 줄씩 그려지고 면이 채워짐 */
 (function () {
   if (!document.documentElement.classList.contains('js')) return;
   var slot = document.querySelector('[data-spiral]');
   var section = document.querySelector('.principles');
   if (!slot || !section || !window.fetch) return;
 
-  var s1 = null, s2 = null, lastP = -1;
-  var FEATHER = 0.14; /* 번지는 폭(반지름 비율) */
+  var s1 = null, s2 = null, lines = [], us = [], lastP = -1;
+  var FEATHER = 0.14; /* 면이 번지는 폭(반지름 비율) */
+  var SPREAD = 0.25;  /* 한 줄이 그려지는 데 쓰는 진행 구간 */
+  var LAST = 0.75;    /* 가장 안쪽 줄이 시작되는 지점 */
 
   function clamp(v) { return Math.min(1, Math.max(0, v)); }
   function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
@@ -284,20 +286,27 @@
     var p = ease(clamp((vh * 0.6 - r.top) / (r.height * 0.7)));
     if (p === lastP) return;
     lastP = p;
-    /* hole: 아직 가려진 안쪽 반경(1 = 전부 가림, 0 = 전부 표시) */
-    var hole = (1 - p) * (1 + FEATHER);
-    var b = Math.min(1, hole);
-    var a = Math.max(0, hole - FEATHER);
-    s1.setAttribute('offset', a.toFixed(4));
-    s2.setAttribute('offset', b.toFixed(4));
+
+    /* 면(그라데이션): 바깥에서 안으로 */
+    var pf = clamp(p / (LAST + SPREAD));
+    var hole = (1 - pf) * (1 + FEATHER);
+    s1.setAttribute('offset', Math.max(0, hole - FEATHER).toFixed(4));
+    s2.setAttribute('offset', Math.min(1, hole).toFixed(4));
+
+    /* 라인: 바깥쪽 줄부터 끝에서 안쪽으로 한 줄씩 그려짐 */
+    for (var i = 0; i < lines.length; i++) {
+      var prog = clamp((p - us[i] * LAST) / SPREAD);
+      lines[i].setAttribute('stroke-dashoffset', (1 - prog).toFixed(3));
+    }
   }
 
   fetch('assets/spiral.svg').then(function (res) { return res.text(); }).then(function (txt) {
     slot.innerHTML = txt;
     var svg = slot.querySelector('svg');
-    svg.classList.add('spiral');
     s1 = svg.querySelector('.spiral__s1');
     s2 = svg.querySelector('.spiral__s2');
+    lines = Array.prototype.slice.call(svg.querySelectorAll('.spiral__ln'));
+    us = lines.map(function (l) { return parseFloat(l.getAttribute('data-u')); });
     render();
   }).catch(function () { /* 실패 시 <img> 정적 SVG 유지 */ });
 
