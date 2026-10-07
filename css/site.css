@@ -191,9 +191,10 @@ em{font-style:italic;}
 /* ---------- principles ---------- */
 .principles{position:relative;padding-top:var(--fg-prin-pt);padding-bottom:var(--fg-prin-pb);background:var(--fg-black);}
 .principles__pin{position:absolute;inset:0;z-index:0;pointer-events:none;}
-.img-slot--center{position:sticky;top:calc(50vh - var(--fg-slot-center-h) / 2);margin:var(--fg-prin-pt) auto 0;
+.img-slot--center{background:transparent;display:flex;align-items:center;justify-content:center;position:sticky;top:calc(50vh - var(--fg-slot-center-h) / 2);margin:var(--fg-prin-pt) auto 0;
   width:var(--fg-slot-center-w);height:var(--fg-slot-center-h);}
 .card{will-change:transform;}
+.img-slot--center .spiral{display:block;width:100%;height:100%;object-fit:contain;}
 .principles__row{position:relative;z-index:1;display:flex;width:min(var(--fg-prin-row-w),100%);margin-inline:auto;padding-inline:var(--fg-prin-pad-x);}
 .principles__row--right{justify-content:flex-end;}
 .principles__row--gap{margin-top:var(--fg-prin-gap);}

@@ -262,3 +262,51 @@
   renderCards();
   renderStats();
 })();
+
+/* ARCNODE — Principles 중앙 SVG: 스크롤하면 바깥에서 안으로 라인이 채워짐 */
+(function () {
+  if (!document.documentElement.classList.contains('js')) return;
+  var slot = document.querySelector('[data-spiral]');
+  var section = document.querySelector('.principles');
+  if (!slot || !section || !window.fetch) return;
+
+  var s1 = null, s2 = null, lastP = -1;
+  var FEATHER = 0.14; /* 번지는 폭(반지름 비율) */
+
+  function clamp(v) { return Math.min(1, Math.max(0, v)); }
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+  function render() {
+    if (!s1) return;
+    var r = section.getBoundingClientRect();
+    var vh = window.innerHeight;
+    /* 섹션이 화면에 들어오기 시작할 때 0 → 섹션의 70% 지점을 지날 때 1 */
+    var p = ease(clamp((vh * 0.6 - r.top) / (r.height * 0.7)));
+    if (p === lastP) return;
+    lastP = p;
+    /* hole: 아직 가려진 안쪽 반경(1 = 전부 가림, 0 = 전부 표시) */
+    var hole = (1 - p) * (1 + FEATHER);
+    var b = Math.min(1, hole);
+    var a = Math.max(0, hole - FEATHER);
+    s1.setAttribute('offset', a.toFixed(4));
+    s2.setAttribute('offset', b.toFixed(4));
+  }
+
+  fetch('assets/spiral.svg').then(function (res) { return res.text(); }).then(function (txt) {
+    slot.innerHTML = txt;
+    var svg = slot.querySelector('svg');
+    svg.classList.add('spiral');
+    s1 = svg.querySelector('.spiral__s1');
+    s2 = svg.querySelector('.spiral__s2');
+    render();
+  }).catch(function () { /* 실패 시 <img> 정적 SVG 유지 */ });
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; render(); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+})();
