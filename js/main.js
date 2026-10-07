@@ -282,8 +282,9 @@
     if (!s1) return;
     var r = section.getBoundingClientRect();
     var vh = window.innerHeight;
-    /* 섹션이 화면에 들어오기 시작할 때 0 → 섹션의 70% 지점을 지날 때 1 */
-    var p = ease(clamp((vh * 0.6 - r.top) / (r.height * 0.7)));
+    /* 섹션이 화면에 들어오기 시작할 때 0 → 섹션 끝이 화면 아래에 닿을 때(마지막 카드가 지나가는 동안) 1.
+       마지막 카드까지 계속 변하도록 이징 없이 선형으로 진행 */
+    var p = clamp((vh * 0.6 - r.top) / (r.height - vh * 0.4));
     if (p === lastP) return;
     lastP = p;
 
@@ -306,7 +307,9 @@
     s1 = svg.querySelector('.spiral__s1');
     s2 = svg.querySelector('.spiral__s2');
     lines = Array.prototype.slice.call(svg.querySelectorAll('.spiral__ln'));
-    us = lines.map(function (l) { return parseFloat(l.getAttribute('data-u')); });
+    /* 라인은 바깥쪽 → 안쪽 순서로 정렬돼 있음. 반지름이 아니라 순번으로 균등하게 나눠
+       스크롤 전 구간(마지막 카드까지)에서 계속 새 라인이 그려지게 함 */
+    us = lines.map(function (l, i) { return lines.length > 1 ? i / (lines.length - 1) : 0; });
     render();
   }).catch(function () { /* 실패 시 <img> 정적 SVG 유지 */ });
 
