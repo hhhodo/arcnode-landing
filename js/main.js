@@ -322,3 +322,16 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
 })();
+
+/* ARCNODE — 노트북 대응: 화면 높이가 낮으면 통계 섹션(1920×993 기준 프레임)을 비율 유지로 축소 */
+(function () {
+  var stage = document.querySelector('.stats__stage');
+  if (!stage) return;
+  var FRAME_H = 993, PAD = 70;
+  function fit() {
+    var s = Math.min(1, Math.max(0.55, window.innerHeight / (FRAME_H + PAD)));
+    stage.style.setProperty('--stat-s', s.toFixed(4));
+  }
+  fit();
+  window.addEventListener('resize', fit);
+})();
